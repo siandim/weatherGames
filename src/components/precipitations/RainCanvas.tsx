@@ -139,7 +139,6 @@ const RainCanvas: React.FC = () => {
           else if (rh <= 90) {
             prevDrops = Math.floor(prevDrops * 0.7);
           }
-          console.log(prevDrops)
           return prevDrops;
         } 
         //   return 0;
@@ -223,31 +222,20 @@ const animate = () => {
     drop: Raindrop,
     img: HTMLImageElement
   ) => {
-    ctx.drawImage(img, drop.x, drop.y, 25, 25); // Adjust size as needed
+    if (img === precipImages["snow"]) {
+      ctx.drawImage(img, drop.x, drop.y, 15, 15);
+    }else {ctx.drawImage(img, drop.x, drop.y, 25, 25);}
+     // Adjust size as needed
   };
-
-  // Update the position of a raindrop
-  // Update the position of a raindrop and remove it if it reaches beyond the layer bounds
-// const updateRaindrop = (drop: Raindrop, height: number, layers: number[]) => {
-//   drop.y += drop.speed;
-  
-//   // Check if raindrop should be removed based on its layer and position
-  
-//   if (drop.layer === 0 && drop.y > height * layers[1]) {
-//     drop.y = -1; // Move raindrop off the canvas
-//   } else if (drop.y > height) {
-//     // Reset y position if it goes beyond the canvas height
-//     drop.y = height * layers[drop.layer]; // Set to the layer's starting position
-//     drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
-//   }
-// };
 
 const updateRaindrop = (drop: Raindrop, height: number, layers: number[]) => {
   drop.y += drop.speed;
-  const scales = [0.25, 0.5, 0.75, 1];
+  const scales = [0.27, 0.5, 0.75, 1];
   if (drop.layer === 0 && drop.y > height * layers[1]) {
     drop.y = height * scales[drop.layer]; 
-  } else if (drop.y > height) {
+  } else if (drop.layer === 1 && drop.y > height * layers[2]) {
+    drop.y = height * scales[drop.layer]; 
+  }else if (drop.y > height) {
     drop.y = height * scales[drop.layer]; // Reset y to the starting position for the current layer
     drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
   }
