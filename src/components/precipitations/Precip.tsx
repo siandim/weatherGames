@@ -113,9 +113,6 @@ const RainCanvas: React.FC = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Calculate the number of raindrops based on the relative humidity for each layer
-    const numDrops = relativeHumidity.map((rh) => getNumDrops(rh));
-
     // Load all precipitation images
     const precipImages: { [key: string]: HTMLImageElement } = {};
     PrecipImages.forEach((precip) => {
@@ -124,7 +121,9 @@ const RainCanvas: React.FC = () => {
       precipImages[precip.name] = img;
     });
 
-    // Generate raindrops with random positions and speeds for each layer
+    const numDrops = relativeHumidity[0] >= 90 ? temp.map((index) => getNumDrops(relativeHumidity[index])) : [0, 0, 0, 0];
+
+    // Generate raindrops with random positions and speeds for each layer if conditions are met
     const raindrops = numDrops
       .map((num, layer) =>
         generateRaindrops(
@@ -149,7 +148,10 @@ const RainCanvas: React.FC = () => {
       requestAnimationFrame(animate);
     };
 
-    animate(); // Start animation
+    if (relativeHumidity[0] >= 90) {
+      animate(); // Start animation only if the condition is met
+    }
+
   }, [relativeHumidity, temp]);
 
   // Determine the number of raindrops based on humidity
@@ -206,7 +208,7 @@ const RainCanvas: React.FC = () => {
     drop.y += drop.speed;
     const times = [0.25, 0.5, 0.75, 1];
     if (drop.y > height) {
-      drop.y = height * times[drop.layer] // Reset y to a random value within the layer's range
+      drop.y = height * times[drop.layer]; // Reset y to a random value within the layer's range
       drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
     }
   };
@@ -229,7 +231,7 @@ const RainCanvas: React.FC = () => {
       <div className="inputs relative p-4">
         <div className="pt-14">
           {/* Inputs for adjusting temperature and dew point */}
-          {temp.map((t, index) => (
+          {temp.map((index) => (
             <div key={index} className="layer">
               <h2>Layer {index + 1}</h2>
               <div>

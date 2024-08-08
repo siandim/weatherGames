@@ -1,3 +1,4 @@
+import Home from "../components/precipitations/home"
 
 const Page1 = () => {
   return (
