@@ -35,6 +35,7 @@
    align-items: end;
    flex-direction: column; /* Stack items vertically */
     justify-content: flex-end;
+    border: 2px solid black;
   
 }
 .fah {

@@ -7,7 +7,8 @@ const Page3: React.FC = () => {
   // Example values for temperature, dew point
   return (
     <div>
-     <RainCanvas />
+      <div className="flex justify-center items-center"> <RainCanvas /></div>
+    
     </div>
   );
 };

@@ -20,7 +20,7 @@ export  const generateRaindrops = (
     const drops: Raindrop[] = [];
     // const width = canvasRef.current?.width || window.innerWidth;
     // const height = canvasRef.current?.height || window.innerHeight;
-    const scales = [0.25, 0.5, 0.75, 1];
+    const scales = [0.10, 0.5, 0.75, 1];
 
     for (let i = 0; i < numOfDrops; i++) {
       drops.push({
@@ -54,8 +54,14 @@ export  const generateRaindrops = (
       if (currTemp <= 32) return "snow"; // Snow for currTemps <= 32°F
       if (currTemp <= 40) return "supercooled-Droplets";
     } else {
-      if (firstTemp > 32 || secondTemp >32 && currTemp <= 32 ) {
-                        
+      if ((firstTemp > 32 || secondTemp > 32) && currTemp <= 32 ) {
+        return "snow-grains";    
+      } else if(firstTemp < 32 && secondTemp <32 && currTemp <= 32 ) {
+        return "snow";
+      } else if (currTemp <= 40){
+        return "supercooled-Droplets";
+      } else {
+        return "raindrop"
       }
     }
      // Sleet for temperatures <= 40°F

@@ -6,7 +6,7 @@ const MemoryGamePage = () => {
       <div className="header-container">
         <h1 className="texts content-center">Match the Weather Instruments</h1>
       </div>
-      <div className="border border-solid border-white h-fit">
+      <div>
         <MemoryGame />
       </div>
     </div>
