@@ -12,7 +12,6 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Page1 />} />
-        
         <Route path="/page3" element={<Page3 />} />
         <Route path="/memoryGame" element={<MemoryGamePage />} />
       </Routes>

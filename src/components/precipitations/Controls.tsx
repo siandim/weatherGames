@@ -18,7 +18,7 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
   handleDewPointChange,
   handleSlidingEnd,
 }) => (
-  <div className="inputs border">
+  <div className="inputs">
     <div className="">
       {temp.map((_t, index) => (
         <div key={index} className={`mb-7 `}>

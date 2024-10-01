@@ -3,7 +3,6 @@ import { Images, Precips } from "./interfaces";
 import { calculateRelativeHumidity } from "./helpers";
 import RaindropCanvas from "./PrecipitationCanvas";
 import { LayerControls } from "./Controls";
-import styles from "./precipitation.css";
 
 // Define background images for different weather conditions
 const backgroundImg: Images[] = [
@@ -103,7 +102,7 @@ const RainCanvas: React.FC = () => {
   };
 
   return (
-    <div className="p-3 relative border border-solid border-pink overflow-hidden"
+    <div className="p-3 relative  border-solid overflow-hidden"
     style={{ width: '1000px', height: '500px' }}>
       {/* Display the background cloud image */}
       <img

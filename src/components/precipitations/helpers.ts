@@ -30,6 +30,7 @@ export  const generateRaindrops = (
         length: 0,
         image,
         layer,
+        canChangeType: false
       });
 
     }

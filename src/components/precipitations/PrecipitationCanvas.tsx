@@ -21,6 +21,9 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   const [raindrops, setRaindrops] = useState<Raindrop[]>([]);
   const animationFrameRef = useRef<number | null>(null);
 
+  // Define a humidity threshold for precipitation
+  const humidityThreshold = 60; // Adjust this value as necessary
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -37,57 +40,80 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
       return;
     }
 
-    let raindrops: Raindrop[] = [];
+    // Check if the relative humidity for layer 1 is above the threshold
+    if (raindrops.length === 0 && relativeHumidity[0] >= humidityThreshold) {
+      // Generate initial raindrops from layer 1
+      const numDrops = getNumDrops(relativeHumidity[0]); // Based on layer 1's humidity
 
-    if (relativeHumidity[0] >= 90) {
-      let prevRH = relativeHumidity[0];
-      let prevDrops = getNumDrops(prevRH);
+      const initialRaindrops = generateRaindrops(
+        numDrops,
+        precipImages[determinePrecipType(temp[0], 0, temp[0], temp[1])],
+        0, // Start all drops from layer 1
+        canvas.width,
+        canvas.height
+      ).map((drop) => {
+        let canChangeType;
 
-      const numDrops = relativeHumidity.map((rh, index) => {
-        if (index === 0) {
-          return prevDrops;
+        if (temp[0] > 32 && drop.layer === 1) {
+          // If it's above freezing (32°F) in the lowest layer (layer 1), keep as rain
+          canChangeType = false; // 0% chance of changing type (stays as rain)
+        } else if (temp[0] < 32 && drop.layer > 1 && drop.layer <= 3) {
+          // If it's below freezing in mid layers (layer 2 and 3), chance to change into sleet or snow
+          canChangeType = true; // 100% chance of changing into snow/sleet
+        } else if (temp[0] < 20 && drop.layer > 3) {
+          // If it's very cold (below 20°F) in higher layers (layer 4+), strong chance of turning into snow
+          canChangeType = true; // Strong chance of turning into snow or ice
+        } else if (temp[0] < 40 && temp[1] < 32 && drop.layer > 1) {
+          // If temperature in the first layer is below 40°F and second layer is below freezing with high humidity
+          canChangeType = Math.random() < 0.9; // 90% chance of changing type (likely to freeze)
         } else {
-          prevRH = relativeHumidity[index - 1];
-          if (rh > prevRH) {
-            prevDrops = Math.floor(prevDrops);
-          } else if (rh < 20) {
-            return (prevDrops = Math.floor(prevDrops * 0.2));
-          }
-          if (rh <= 60) {
-            prevDrops = Math.floor(prevDrops * 0.5);
-          } else if (rh <= 90) {
-            prevDrops = Math.floor(prevDrops * 0.7);
-          }
-          return prevDrops;
-        }
+          // Default condition: 70% chance to change type based on random factors (e.g., wind)
+          canChangeType = Math.random() < 0.7;
+        } // 70% chance the raindrop can change type
+        return {
+          ...drop,
+          canChangeType,
+        };
       });
 
-      raindrops = numDrops
-        .map((num, layer) => {
-          return generateRaindrops(
-            num,
-            precipImages[
-              determinePrecipType(temp[layer], layer, temp[0], temp[1])
-            ],
-            layer,
-            canvas.width,
-            canvas.height
-          );
-        })
-        .flat();
-
-      setRaindrops(raindrops);
+      setRaindrops(initialRaindrops);
+    } else if (raindrops.length === 0) {
+      // If humidity is not sufficient, set raindrops to empty
+      setRaindrops([]);
+    } else {
+      setRaindrops([]);
     }
 
     const animate = () => {
       if (!canvasRef.current) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const layerPositions = [0.25, 0.5, 0.75, 1];
+      const layerPositions = [0.1, 0.35, 0.55, 0.7]; // Define layer positions as percentages of canvas height
 
       for (let drop of raindrops) {
+        // Determine the current layer based on drop.y position
+        const currentLayer = getCurrentLayer(
+          drop.y,
+          canvas.height,
+          layerPositions
+        );
+
+        // Only change the precipitation type if canChangeType is true
+        if (drop.canChangeType) {
+          const newPrecipType = determinePrecipType(
+            temp[currentLayer],
+            currentLayer,
+            temp[0],
+            temp[1]
+          );
+          drop.image = precipImages[newPrecipType];
+        }
+
+        // Draw the drop with the (possibly updated) image
         drawRaindrop(ctx, drop, drop.image);
-        updateRaindrop(drop, canvas.height, layerPositions);
+
+        // Move the drop
+        updateRaindrop(drop, canvas.height);
       }
 
       animationFrameRef.current = requestAnimationFrame(animate);
@@ -103,6 +129,105 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     };
   }, [relativeHumidity, temp, precipImages, isSliding]);
 
+  // Function to determine the current layer based on y-position
+  const getCurrentLayer = (y: number, height: number, layers: number[]) => {
+    if (y < height * layers[1]) {
+      return 0; // Layer 1
+    } else if (y < height * layers[2]) {
+      return 1; // Layer 2
+    } else if (y < height * layers[3]) {
+      return 2; // Layer 3
+    } else {
+      return 3; // Layer 4
+    }
+  };
+
+  // const updateRaindrop = (drop: Raindrop, height: number) => {
+  //   drop.y += drop.speed;
+  //   // if (drop.y == .50 * height){
+  //   //   drop.y =
+  //   // }
+  //   if (drop.y > height) {
+  //     // Reset drop to the top if it falls out of view
+  //     drop.y = 0.16 * height;
+  //     drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
+  //   }
+  // };
+  const updateRaindrop = (drop: Raindrop, height: number) => {
+    drop.y += drop.speed;
+  
+    // Get the current layer based on drop's y position
+    const currentLayer = getCurrentLayer(drop.y, height, [0.1, 0.35, 0.55, 0.7]);
+    const dissapear = height + 1;
+    // Define probabilities for disappearing in layers 2 and 3
+    if (currentLayer === 1 ) {
+      // && relativeHumidity[1] < 90 && Math.random() < 0.05
+      // 20% chance to disappear in layer 2
+      switch (true){
+        case relativeHumidity[1] < 30:
+          if (Math.random() < .15) {
+            drop.y= dissapear;
+          }
+          break;
+        case relativeHumidity[1] < 40:
+          if (Math.random() < .1){
+            drop.y = dissapear;
+          }
+          break;
+        case relativeHumidity[1] < 60:
+          if (Math.random() < .07){
+            drop.y=dissapear;
+          }
+          break;
+        case relativeHumidity[1] <80:
+          if (Math.random() < .05) {
+            drop.y = dissapear;
+          }
+          break;
+        default:
+          break;
+      }
+      // drop.y = height + 1; // Move it out of view
+    } else if (currentLayer === 2 && relativeHumidity[2] < relativeHumidity[1]) {
+      // && relativeHumidity[2] < 90 && Math.random() < 0.05
+      // 30% chance to disappear in layer 3
+      
+      switch(true) {
+        case relativeHumidity[2] < 30:
+          if (Math.random() < .15) {
+            drop.y= dissapear;
+          }
+          break;
+        case relativeHumidity[2] < 40:
+          if (Math.random() < .1){
+            drop.y = dissapear;
+          }
+          break;
+        case relativeHumidity[2] < 60:
+          if (Math.random() < .07){
+            drop.y=dissapear;
+          }
+          break;
+        case relativeHumidity[2] <80:
+          if (Math.random() < .05) {
+            drop.y = dissapear;
+          }
+          break;
+        default:
+          break;
+
+
+      }
+      //drop.y = height + 1; // Move it out of view
+    }
+  
+    // Reset drop to the top if it falls out of view
+    if (drop.y > height) {
+      drop.y = 0.16 * height;
+      drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
+    }
+  };
+  
   const drawRaindrop = (
     ctx: CanvasRenderingContext2D,
     drop: Raindrop,
@@ -112,24 +237,11 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     ctx.drawImage(img, drop.x, drop.y, size, size);
   };
 
-  const updateRaindrop = (drop: Raindrop, height: number, layers: number[]) => {
-    drop.y += drop.speed;
-    const scales = [0.2, 0.5, 0.75, 1];
-    if (drop.layer === 0 && drop.y > height * layers[1]) {
-      drop.y = height * scales[drop.layer];
-    } else if (drop.layer === 1 && drop.y > height * layers[2]) {
-      drop.y = height * scales[drop.layer];
-    } else if (drop.y > height) {
-      drop.y = height * scales[drop.layer];
-      drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
-    }
-  };
-
   return (
     <canvas
       ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
+      width="1000px"
+      height="500px"
       className="absolute"
     ></canvas>
   );

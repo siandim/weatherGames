@@ -5,12 +5,14 @@ export interface Images {
   }
   
   export interface Raindrop {
+    canChangeType: boolean;
     x: number;
     y: number;
     speed: number;
     length: number;
-    image: HTMLImageElement;
+    image: HTMLImageElement ;
     layer: number;
+    
   }
   
   export interface Precips {
