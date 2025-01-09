@@ -1,3 +1,4 @@
+//RainCanvas.tsx
 import React, { useEffect, useState } from "react";
 import { Images, Precips } from "./interfaces";
 import { calculateRelativeHumidity } from "./helpers";
@@ -30,6 +31,15 @@ const PrecipImages: Precips[] = [
     name: "snow",
     enable: false,
   },
+  { src: "/img/precipitation/rain_puddle.png",
+    name:"puddle",
+    enable:false,
+  },
+  {
+    src:"/img/precipitation/pile_snow.png",
+    name:"snow-puddle",
+    enable:false,
+  }
 ];
 
 const RainCanvas: React.FC = () => {

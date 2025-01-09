@@ -24,11 +24,13 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
         <div key={index} className={`mb-7 `}>
           <h2>Layer {index + 1}</h2>
           <div>
-            <label>Temperature:</label>
+    
+            <label style={{ display: 'inline-block', width: '120px', textAlign: 'right' }}>Temperature:</label>
+            
             <input
               type="range"
               min="20"
-              max="100"
+              max="75"
               value={temp[index]}
               onChange={(e) => handleTempChange(index, Number(e.target.value))}
               onMouseUp={handleSlidingEnd}
@@ -37,11 +39,11 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
             <span className={styles.fah}>{temp[index]}°F</span>
           </div>
           <div>
-            <label>Dew Point:</label>
+            <label style={{ display: 'inline-block', width: '120px', textAlign: 'right'}}>Dew Point:</label>
             <input
               type="range"
               min="20"
-              max="100"
+              max="75"
               value={dewPoint[index]}
               onChange={(e) =>
                 handleDewPointChange(index, Number(e.target.value))

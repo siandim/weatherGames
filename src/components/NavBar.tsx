@@ -7,8 +7,8 @@ export default function NavBar() {
           <button className="mr-3">Home Page</button>
         </Link>
 
-        <Link to="/page3">
-          <button className="mr-3">Page 3</button>
+        <Link to="/precip">
+          <button className="mr-3">Precipitation Page</button>
         </Link>
         <Link to="/memoryGame">
           <button className="mr-3">Memory Game</button>
