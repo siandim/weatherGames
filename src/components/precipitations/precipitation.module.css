@@ -1,62 +1,72 @@
-.app-containerimg {
-    display: block; /* Added to enable flexbox layout */
-
-    width: 100%;
-    height: 100vh;
-    box-sizing: border-box;
-    padding: 10px;
-    border: 2px solid black;
+.borders {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-.slider-container {
-    display: flex;
-    margin-bottom: 1rem;
-    border: 2px solid black;
-  }
-  
-  .slider-container input {
-    margin-right: 1rem;
-  }
+.container h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  border-radius: 25px;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  width: fit-content;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.borders > * {
+  border: 5px solid rgb(87, 5, 5);
+  border-radius: 10px;
+}
+
 .inputs {
-    display: flex;
-    justify-content: left;
-    float: right;
-    text-align: right;
-    width: auto;
-    height: 100vh;
+  display: flex;
+  justify-content: left;
+  float: right;
+  text-align: right;
+  width: auto;
+  height: 100vh;
+  background-color: red;
 }
-.layer {
-    height: 25%; /* Each layer takes up one-quarter of the height */
-    overflow-y: auto; /* Allows scrolling if content exceeds the height */
-    box-sizing: border-box;
-    padding: 10px;
-    display: flex;
-   align-items: end;
-   flex-direction: column; /* Stack items vertically */
-    justify-content: flex-end;
-    border: 2px solid black;
-  
-}
+
 .fah {
-    width: 50px; /* Adjust the width as needed *//* Adjust the height as needed */
-    display: inline-block;
+  width: 50px; /* Adjust the width as needed */ /* Adjust the height as needed */
+  display: inline-block;
+}
+.labels {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
 }
 
-/* .row {
-position: absolute;
-  top: 250px; /* Adjust this value as needed to position the box below the clouds */
-  /* left: 0; */
-  /* right: 500px; */
-  /* width: 65%;
-  height: 100%;
-  border: 2px solid black;
-} */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="range"] {
+    overflow: hidden;
+    width: 150px;
+    -webkit-appearance: none;
+    background-color: #ffffff69;
+  }
 
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: #530d04;
+    margin-top: -1px;
+  }
 
-/* .row div {
-    width:50%;
-    height:100%;
-    float:left;
-} */
-
+  input[type="range"]::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: grab;
+    background: #3f0101e5;
+    box-shadow: -80px 0 0 80px #b80c0c8e;
+  }
+}

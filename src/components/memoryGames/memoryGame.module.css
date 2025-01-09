@@ -1,19 +1,24 @@
-.app-container {
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appContainer {
   display: block; /* Added to enable flexbox layout */
-  align-items: center; 
-  width: 100%;
+  width: 100vh;
   height: 100vh;
   box-sizing: border-box;
-  padding: 10px;
-} 
-.header-container {
+  padding-top: 10px;
+}
+.headerContainer {
   display: flex;
   justify-content: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
   gap: 20px; /* Space between button and turns */
   margin-bottom: 20px; /* Space between header and grid */
 }
-.card-grid {
+.cardGrid {
   display: grid;
   margin-left: auto;
   margin-right: auto;
@@ -28,16 +33,16 @@
 
 /* Change to 3 columns and 4 rows on smaller screens */
 @media (max-width: 768px) {
-  .card-grid {
+  .cardGrid {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
-}
+  }
 }
 
 .card {
   position: relative;
   width: 100%;
-  padding-top: 100%; 
+  padding-top: 100%;
 }
 
 .card img {
@@ -48,7 +53,8 @@
   border-radius: 6px;
 }
 
-.card .front, .card .back {
+.card .front,
+.card .back {
   transition: transform 0.5s ease-in;
   backface-visibility: hidden;
   position: absolute;
@@ -62,7 +68,7 @@
   transform: rotateY(90deg);
 }
 
-.flipped .front {
+.flip .front {
   transform: rotateY(0deg);
   transition-delay: 0.2s;
 }
@@ -71,12 +77,12 @@
   transform: rotateY(0deg);
 }
 
-.flipped .back {
+.flip .back {
   transform: rotateY(90deg);
   transition-delay: 0s;
 }
 
-.matched-function-alert {
+.matchedFunctionAlert {
   background-color: #ffd700;
   color: #000;
   padding: 10px;
@@ -86,7 +92,7 @@
   margin-bottom: 20px;
 }
 
-.alert-container {
+.alertContainer {
   position: fixed;
   top: 0;
   left: 0;
@@ -99,7 +105,7 @@
   z-index: 1000;
 }
 
-.alert-content {
+.alertContent {
   background: radial-gradient(#5248dc80, #171a3c);
   padding: 20px;
   border-radius: 10px;
@@ -108,19 +114,19 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.alert-image {
+.alertImage {
   max-width: 500px;
   margin-bottom: 10px;
 }
 
-.alert-text {
+.alertText {
   margin-bottom: 10px;
   background-color: #8d67e4;
   font-size: larger;
   color: white;
 }
 
-.btn-close {
+.btnClose {
   background: none;
   border: none;
   font-size: 1.5em;
@@ -128,6 +134,7 @@
 }
 
 .texts {
+  font-family: Georgia, "Times New Roman", Times, serif;
   border-radius: 25px;
   color: white;
   padding: 10px;

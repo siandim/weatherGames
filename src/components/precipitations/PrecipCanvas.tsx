@@ -1,3 +1,4 @@
+//RainCanvas.tsx
 import React, { useEffect, useState } from "react";
 import { Images, Precips } from "./interfaces";
 import { calculateRelativeHumidity } from "./helpers";
@@ -30,9 +31,15 @@ const PrecipImages: Precips[] = [
     name: "snow",
     enable: false,
   },
+  { src: "/img/precipitation/rain_puddle.png", name: "puddle", enable: false },
+  {
+    src: "/img/precipitation/pile_snow.png",
+    name: "snow-puddle",
+    enable: false,
+  },
 ];
 
-const RainCanvas: React.FC = () => {
+const PrecipCanvas: React.FC = () => {
   const [temp, setTemp] = useState<number[]>([70, 70, 70, 70]); // State for temperatures
   const [dewPoint, setDewPoint] = useState<number[]>([50, 50, 50, 50]); // State for dew points
   const [precipImages, setPrecipImages] = useState<{
@@ -102,8 +109,10 @@ const RainCanvas: React.FC = () => {
   };
 
   return (
-    <div className="p-3 relative  border-solid overflow-hidden"
-    style={{ width: '1000px', height: '500px' }}>
+    <div
+      className="p-3 relative  border-solid overflow-hidden"
+      style={{ width: "1000px", height: "500px" }}
+    >
       {/* Display the background cloud image */}
       <img
         src={cloudImage.src}
@@ -132,4 +141,4 @@ const RainCanvas: React.FC = () => {
   );
 };
 
-export default RainCanvas;
+export default PrecipCanvas;

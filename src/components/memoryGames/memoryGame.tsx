@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "../memoryGames/memoryGame.css";
 import SingleCard from "./SingleCard";
-import Alert from "../Alert";
+import Alert from "./Alert";
+import styles from "./memoryGame.module.css"
 
 interface Card {
   src: string;
@@ -132,11 +132,11 @@ const MemoryGame: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <div className="app-container">
-        <div className="header-container">
+     <div className={styles.container}>
+      <div className={styles.appContainer}>
+        <div className={styles.headerContainer}>
           <button onClick={shuffleCards}>New Game</button>
-          <div className="texts">
+          <div className={styles.texts}>
             <p>Turns: {turns}</p>
           </div>
         </div>
@@ -145,7 +145,7 @@ const MemoryGame: React.FC = () => {
             {description}
           </Alert>
         )}
-        <div className="card-grid">
+        <div className={styles.cardGrid}>
           {cards.map((card) => (
             <SingleCard
               key={card.id}
@@ -157,7 +157,7 @@ const MemoryGame: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
