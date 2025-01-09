@@ -1,10 +1,9 @@
+import HomePage from "../components/home/home"
 
 const Page1 = () => {
   return (
-    <div>
-      <div>
-
-      </div>
+    <div className="p-4">
+     <HomePage/>
     </div>
   )
 }

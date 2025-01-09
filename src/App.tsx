@@ -2,7 +2,8 @@
 import { Route, Routes } from "react-router-dom";
 import Page1 from "./pages/Page1";
 import NavBar from "./components/NavBar";
-import Page3 from "./pages/Page3";
+import Page3 from "./pages/PrecipPage";
+import './index.css'
 // import Precipitation from "./pages/Precipitation";
 import MemoryGamePage from "./pages/MemoryGame";
 
