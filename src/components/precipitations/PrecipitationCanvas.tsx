@@ -14,7 +14,6 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   temp,
   relativeHumidity,
   precipImages,
-  cloudImage,
   isSliding,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
