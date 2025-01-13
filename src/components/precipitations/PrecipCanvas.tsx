@@ -111,7 +111,10 @@ const PrecipCanvas: React.FC = () => {
   return (
     <div
       className="p-3 relative  border-solid overflow-hidden"
-      style={{ width: "1000px", height: "500px" }}
+      style={{ maxWidth: "1000px",
+        maxHeight: "510px",
+        width: "100%",
+        height: "100%"}}
     >
       {/* Display the background cloud image */}
       <img

@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import PrecipitationPage from "./pages/Precip";
 import MemoryGamePage from "./pages/MemoryGame";
-// import Precipitation from "./pages/Precipitation";
+import WaterCyclePage from "./pages/WaterCycle.tsx";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/precip" element={<PrecipitationPage />} />
         <Route path="/memoryGame" element={<MemoryGamePage />} />
+        <Route path="/waterCycle" element={<WaterCyclePage />}/>
       </Routes>
     </>
   );
