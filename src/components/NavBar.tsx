@@ -8,10 +8,13 @@ export default function NavBar() {
         </Link>
 
         <Link to="/precip">
-          <button className="mr-3">Precipitation Page</button>
+          <button className="mr-3">Precipitation </button>
         </Link>
         <Link to="/memoryGame">
           <button className="mr-3">Memory Game</button>
+        </Link>
+        <Link to="/waterCycle">
+          <button className="mr-3">Water Cycle</button>
         </Link>
       </nav>
     </nav>

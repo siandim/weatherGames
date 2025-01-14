@@ -1,0 +1,100 @@
+.container {
+  display: flex; /* Flexbox layout to center the content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  position: relative;
+}
+
+.imgContainer {
+  display: inline-block; /* Allow the container to wrap tightly around the image */
+  position: relative; /* To position elements inside */
+  max-width: 100%; /* Ensure the container doesn't overflow */
+  max-height: 100%; /* Ensure the container doesn't overflow */
+}
+
+.imgContainer img {
+  width: 100%; /* Makes the image take full width of its container */
+  height: 100%; /* Makes the image take full height of its container */
+  object-fit: cover; /* Ensure the image maintains its aspect ratio */
+  /* top: 50%; /* Center the image vertically */
+  /* left: 50%; Center the image horizontally */
+  /* transform: translate(-50%, -50%); Adjust the position to truly center it */
+}
+
+.minimize {
+}
+.noting {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+  font-weight: bold;
+  padding: 2%;
+  width: fit-content;
+  text-align: center;
+  border: 2px solid white;
+  z-index: 1;
+}
+
+.noting.topLeft {
+  top: 30%; 
+  left: 10%;
+}
+
+.noting.topRight {
+  top: 7%;
+  left: 80%;
+}
+.noting.topCenter {
+  top: 5%;
+  left: 40%;
+}
+.noting.centering {
+  top: 50%;
+  left: 50%;
+  
+}
+
+.hiddenText {
+  position: absolute;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid black;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+@keyframes moveToCenter {
+  0% {
+    transform: (var(--startX, 0%), var(--startY, 0%));
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform:translateX(-50%);
+  }
+}
+
+.animation1 {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+.animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: moveToCenter 2s ease-in-out forwards;
+  font-size: 2rem;
+  color: #000;
+}

@@ -1,3 +1,4 @@
+import WaterCycle from "../components/waterCycle/waterCycle";
 
 const WaterCyclePage = () => {
   return (
