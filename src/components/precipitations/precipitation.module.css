@@ -18,6 +18,7 @@
   border-radius: 25px;
   color: white;
   width: 70%;
+  border: 5px solidZ;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 .container h1 {
@@ -41,7 +42,7 @@
   text-align: right;
   width: auto;
   height: 100vh;
-  background-color: red;
+  background-color: rgb(0, 110, 255);
 }
 
 .fah {
@@ -53,11 +54,56 @@
   width: 120px;
   text-align: right;
 }
+.sliders {
+  margin-bottom: 7px;
+}
+.sliders input {
+  color:rgb(68, 0, 255)
+}
+/* General styling for the slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40%;
+  height: 10px; /* Adjust thickness */
+  border-radius: 5px;
+  justify-content: center;
+  outline: none;
+  background: #ddd; /* Default right-side color */
+  transition: background 0.2s;
+}
 
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
+/* Track styling */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+}
+
+/* Thumb (handle) styling */
+input[type="range"]::-webkit-slider-thumb {
+  margin-top: -3px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #404142; /* Handle color */
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+/* For Firefox */
+input[type="range"]::-moz-range-track {
+  height: 10px;
+  border-radius: 5px;
+}
+
+
+/* @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="range"] {
     overflow: hidden;
-    width: 150px;
+    width: 300px;
     -webkit-appearance: none;
     background-color: #ffffff69;
   }
@@ -66,6 +112,7 @@
     height: 10px;
     -webkit-appearance: none;
     color: #530d04;
+    background: #b80c0c8e; 
     margin-top: -1px;
   }
 
@@ -76,5 +123,5 @@
     cursor: grab;
     background: #3f0101e5;
     box-shadow: -80px 0 0 80px #b80c0c8e;
-  }
-}
+  } */
+

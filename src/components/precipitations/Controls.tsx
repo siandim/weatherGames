@@ -19,16 +19,12 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
   handleSlidingEnd,
 }) => (
   <div>
-    <div >
+    <div>
       {temp.map((_t, index) => (
-        <div key={index} className={`mb-7`}>
+        <div key={index} className={styles.sliders}>
           <br />
           <div>
-            <label
-            className={styles.labels}
-            >  
-              Temperature:
-            </label>
+            <label className={styles.labels}>Temperature:</label>
 
             <input
               type="range"
@@ -38,14 +34,22 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
               onChange={(e) => handleTempChange(index, Number(e.target.value))}
               onMouseUp={handleSlidingEnd}
               onTouchEnd={handleSlidingEnd}
+              style={{
+                background: `linear-gradient(to right, 
+rgb(86, 104, 165) 0%, /* Left side () */
+                  rgb(84, 145, 214) ${
+                    ((temp[index] - 20) / (75 - 20)) * 100
+                  }%, /* Fill percentage */
+                  #ddd ${
+                    ((temp[index] - 20) / (75 - 20)) * 100
+                  }%, /* Right side (Gray) */
+                  #ddd 100%)`,
+              }}
             />
             <span className={styles.fah}>{temp[index]}°F</span>
           </div>
           <div>
-           <label
-           className={styles.labels}>
-              Dew Point:
-            </label>
+            <label className={styles.labels}>Dew Point:</label>
             <input
               type="range"
               min="20"
@@ -56,6 +60,17 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
               }
               onMouseUp={handleSlidingEnd}
               onTouchEnd={handleSlidingEnd}
+              style={{
+                background: `linear-gradient(to right, 
+rgb(99, 58, 20) 0%, /* Left side (Red) */
+                  rgb(85, 59, 11) ${
+                  ((dewPoint[index] - 20) / (75 - 20)) * 100
+                }%, /* Fill percentage */
+                  #ddd ${
+                    ((dewPoint[index] - 20) / (75 - 20)) * 100
+                  }%, /* Right side (Gray) */
+                  #ddd 100%)`,
+              }}
             />
             <span className={styles.fah}>{dewPoint[index]}°F</span>
           </div>
