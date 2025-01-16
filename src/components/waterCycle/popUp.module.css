@@ -1,0 +1,54 @@
+.alertContainer {
+  position: absolute;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.alertContent {
+  display: flex;
+  flex-direction: column; /* Arrange children in a column */
+  justify-content: center;
+  background: radial-gradient(#4899dc80, #172d3c);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  align-items: center;
+  /* max-width: 100%; */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.alertImage {
+  width: 10%;
+  margin-bottom: 10px;
+}
+
+.alertText {
+  font-size: x-large;
+  padding: 5%;
+  text-align: center;
+}
+
+.alertContainer button {
+  background: linear-gradient(135deg, #4e9da0, #1b2853);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+.alertContainer button:hover {
+    background: linear-gradient(135deg, #111242, #070224);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  }
+
+.texts {
+  font-size: x-large;
+  padding: 1%;
+  text-align: center;
+  color: white;
+ 
+}

@@ -106,10 +106,14 @@
 }
 
 .alertContent {
+  display: flex;
+  flex-direction: column; /* Arrange children in a column */
+  justify-content: center;
   background: radial-gradient(#5248dc80, #171a3c);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  align-items: center;
   max-width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

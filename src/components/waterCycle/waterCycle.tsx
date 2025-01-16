@@ -1,137 +1,103 @@
-// import { useState } from "react";
-// import styles from "./waterCycle.module.css";
-
-// const WaterCycle = () => {
-//   const [textBoxes, setTextBoxes] = useState([
-//     {
-//       name: "Evaporation",
-//       isVisible: false,
-//       content: "Evaporation stuff",
-//       position: { top: "30%", left: "10%" },
-//       images: "/img/waterCycle/evaporation.gif",
-//     },
-//     {
-//       name: "Condensation",
-//       isVisible: false,
-//       content: "Condensation stuff",
-//       position: { top: "5%", left: "40%" },
-//       images: "/img/waterCycle/condensation.gif",
-//     },
-//     {
-//       name: "Precipitation",
-//       isVisible: false,
-//       content: "Rain stuff",
-//       position: { top: "7%", left: "80%" },
-//       images: "/img/waterCycle/precipitation.gif",
-//     },
-//     {
-//       name: "WaterCycle",
-//       isVisible: false,
-//       content: "WaterCycle stuff",
-//       position: { top: "50%", left: "50%" },
-//     },
-//   ]);
-
-//   const toggleTextBox = (name: string) => {
-//     setTextBoxes((prevState) =>
-//       prevState.map((box) => ({
-//         ...box,
-//         isVisible: box.name == name ? !box.isVisible : false,
-//       }))
-//     );
-//   };
-//   const handleClose = (content: string) => {
-//     setTextBoxes((prevState) =>
-//       prevState.map((box) =>
-//         box.content == content ? { ...box, isVisible: false } : box
-//       )
-//     );
-//   };
-
-//   return (
-//     <div>
-//       <div className={styles.container}>
-//         <div className={styles.imgContainer}>
-//           <img src="/img/waterCycle/waterCycle.gif" />
-//           {textBoxes.map((box) => (
-//             <div key={box.name}>
-//               <div
-//                 className={styles.noting}
-//                 style={{ top: box.position.top, left: box.position.left }}
-//                 onClick={() => toggleTextBox(box.name)}
-//               >
-//                 {box.name}
-//               </div>
-//               {box.isVisible && (
-//                 <div
-//                   className={styles.animation}
-//                   onClick={() => handleClose(box.content)}
-//                 >
-//                   <img src={box.images} alt="" />
-//                   More information: {box.content}
-//                 </div>
-//               )}
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-// export default WaterCycle;
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./waterCycle.module.css";
+import { useLocation } from "react-router-dom";
+import PopUp from "./popUp";
 
 const WaterCycle = () => {
   const [textBoxes, setTextBoxes] = useState([
     {
+      name: "Transpiration",
+      isVisible: false,
+      content:
+        "Plants releases water vapor into the atmosphere through their leaves.",
+      position: { top: "40%", left: "15%" },
+      images: "/img/waterCycle/evaporation.gif",
+    },
+    {
       name: "Evaporation",
       isVisible: false,
-      content: "Evaporation stuff",
-      position: { top: "30%", left: "10%" },
+      content:
+        "Water from oceans, rivers, and lakes turns into water vapor due to the sun's heat.",
+      position: { top: "60%", left: "35%" },
       images: "/img/waterCycle/evaporation.gif",
     },
     {
       name: "Condensation",
       isVisible: false,
-      content: "Condensation stuff",
-      position: { top: "5%", left: "40%" },
+      content:
+        " The water vapor cools as it rises, turning back into tiny water droplets that form clouds.",
+      position: { top: "9%", left: "50%" },
       images: "/img/waterCycle/condensation.gif",
     },
     {
       name: "Precipitation",
       isVisible: false,
-      content: "Rain stuff",
-      position: { top: "7%", left: "80%" },
+      content:
+        "When the clouds get too heavy, the water falls back to Earth as rain, snow, sleet, or hail.",
+      position: { top: "10%", left: "80%" },
       images: "/img/waterCycle/precipitation.gif",
     },
     {
       name: "WaterCycle",
       isVisible: false,
-      content: "WaterCycle stuff",
-      position: { top: "50%", left: "50%" },
+      content:
+        "also known as hydrologic cycle, is the continuous movement of water through the Earth's atmosphere, land, and oceans.",
+      position: { top: "80%", left: "60%" },
+      images: "/img/waterCycle/waterCycle.gif"
     },
   ]);
 
-  const toggleTextBox = (name: string) => {
-    setTextBoxes((prevState) =>
-      prevState.map((box) => ({
+  const location = useLocation(); // Detect route changes
+  console.log(location);
+  useEffect(() => {
+    // Stop speech when route changes
+    window.speechSynthesis.cancel();
+  }, [location]);
+
+  const toggleTextBox = (name: string, content: string) => {
+    setTextBoxes((prevState) => {
+      const updatedBoxes = prevState.map((box) => ({
         ...box,
-        isVisible: box.name === name ? !box.isVisible : false,
-      }))
-    );
+        isVisible: box.name === name && box.isVisible == false ? true : false,
+      }));
+
+      // Find the updated box state to check if it's visible
+      const currentBox = updatedBoxes.find((box) => box.name === name);
+
+      if (currentBox?.isVisible) {
+        window.speechSynthesis.cancel();
+        speakFunction(name + ", " + content);
+      } else {
+        window.speechSynthesis.cancel();
+      }
+
+      return updatedBoxes;
+    });
   };
 
-  const handleClose = (content: string) => {
+  const handleClose = () => {
+    window.speechSynthesis.cancel();
     setTextBoxes((prevState) =>
-      prevState.map((box) =>
-        box.content === content ? { ...box, isVisible: false } : box
-      )
+      prevState.map((box) => ({ ...box, isVisible: false }))
     );
+  };
+  const speakFunction = (text: string) => {
+    const words = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(words);
   };
 
   return (
     <div>
+      <div className={styles.title}>
+        <h1> Water Cycle </h1>
+        <p className="text-lg">
+          This animation shows the entire process of the water cycle.
+        </p>
+        <p>
+          Click on different parts of the text to explore what happens at each
+          stage.
+        </p>
+      </div>
       <div className={styles.container}>
         <div className={styles.imgContainer}>
           <img src="/img/waterCycle/waterCycle.gif" alt="Water Cycle" />
@@ -140,47 +106,29 @@ const WaterCycle = () => {
               <div
                 className={styles.noting}
                 style={{
-                  position: "absolute",
                   top: box.position.top,
                   left: box.position.left,
                   transform: "translate(-50%, -50%)",
                   cursor: "pointer",
                 }}
-                onClick={() => toggleTextBox(box.name)}
+                onClick={() => toggleTextBox(box.name, box.content)}
               >
-                {box.name}
+                <button>{box.name}</button>
               </div>
               {box.isVisible && (
-                <div
-                  style={{
-                    zIndex: "2",
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    opacity: 1,
-                    transition: "all 1s ease-in-out",
-                    backgroundColor: "#fff",
-                    padding: "10px",
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                  }}
-                  onClick={() => handleClose(box.content)}
+                <PopUp
+                 //hidden text
+                  onClose={() => handleClose()}
+                  imageSrc={box.images}
+                  alt={box.name + " image"}
                 >
-                  {box.images && (
-                    <img
-                      src={box.images}
-                      alt={box.name}
-                      style={{
-                        display: "block",
-                        maxWidth: "100%",
-                        marginBottom: "10px",
-                      }}
-                    />
-                  )}
-                  <p>{box.content}</p>
-                </div>
+                  <div className={styles.text}>
+                    <p>
+                      <b>{box.name}</b> <br />
+                      {box.content}
+                    </p>
+                  </div>
+                </PopUp>
               )}
             </div>
           ))}

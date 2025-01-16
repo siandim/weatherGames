@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Images, Precips } from "./interfaces";
 import { calculateRelativeHumidity } from "./helpers";
-import RaindropCanvas from "./PrecipitationCanvas";
+import RaindropCanvas from "./RaindropCanvas";
 import { LayerControls } from "./Controls";
 
 // Define background images for different weather conditions
@@ -41,12 +41,14 @@ const PrecipImages: Precips[] = [
 
 const PrecipCanvas: React.FC = () => {
   const [temp, setTemp] = useState<number[]>([70, 70, 70, 70]); // State for temperatures
-  const [dewPoint, setDewPoint] = useState<number[]>([50, 50, 50, 50]); // State for dew points
+  const [dewPoint, setDewPoint] = useState<number[]>([66, 68, 68, 68]); // State for dew points
   const [precipImages, setPrecipImages] = useState<{
     [key: string]: HTMLImageElement;
   }>({}); // State for precipitation images
   //const [cloudImage, setCloudImage] = useState<Images>(backgroundImg[0]); // State for background image
   const [isSliding, setIsSliding] = useState<boolean>(false); // State to track if sliding is in progress
+
+  
 
   // Calculate relative humidity for each temperature and dew point pair
   const relativeHumidity = temp.map((t, index) =>

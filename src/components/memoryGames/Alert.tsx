@@ -2,7 +2,7 @@ import styles from "./memoryGame.module.css"
 interface alertProps {
   children: string;
   onClose:()=>void, 
-  imageSrc: string;
+  imageSrc?: string;
 }
 const Alert = ({ children, onClose, imageSrc }:alertProps) => {
   return (

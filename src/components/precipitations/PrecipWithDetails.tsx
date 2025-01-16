@@ -6,7 +6,15 @@ const PrecipWithDetails: React.FC = () => {
   return (
     <div>
       <div className={styles.container}>
-        <h1>Precipitation Simulation</h1>
+        <h1>Make It Precipitate</h1>
+        <p>
+          Set the air temperature and dew point at four different altitudes to
+          see what type of precipitation will reach the ground.
+        </p>
+        <p>
+          See what happens when the temperature and dew point are the same or
+          close to each other.
+        </p>
       </div>
       <div className={styles.borders}>
         <RainCanvas />

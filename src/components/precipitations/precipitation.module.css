@@ -13,6 +13,13 @@
   text-align: center;
 }
 
+.container p {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  border-radius: 25px;
+  color: white;
+  width: 70%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 .container h1 {
   font-family: Georgia, "Times New Roman", Times, serif;
   border-radius: 25px;
