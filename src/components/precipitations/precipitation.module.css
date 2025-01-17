@@ -32,6 +32,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  will-change: transform; 
 }
 
 .container p {
@@ -93,18 +94,18 @@
   }
 }
 /* General styling for the slider */
-input[type="range"] {
+/* input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 40%;
-  height: 13px; /* Adjust thickness */
+  height: 13px; 
   border-radius: 5px;
   justify-content: center;
   outline: none;
-  background: #ddd; /* Default right-side color */
+  background: #ddd; 
   transition: background 0.2s;
   touch-action: pan-x; 
-}
+} */
 
 /* Track styling */
 /* input[type="range"]::-webkit-slider-runnable-track {
@@ -114,23 +115,23 @@ input[type="range"] {
 /* } */ 
 
 /* Thumb (handle) styling */
-input[type="range"]::-webkit-slider-thumb {
+/* input[type="range"]::-webkit-slider-thumb {
   margin-top: -1px;
   -webkit-appearance: none;
   appearance: none;
   width: 16px;
   height: 16px;
-  background: #404142; /* Handle color */
+  background: #404142; 
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-}
+} */
 
 /* For Firefox */
-input[type="range"]::-moz-range-track {
+/* input[type="range"]::-moz-range-track {
   height: 10px;
   border-radius: 5px;
-}
+} */
 
 /* @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="range"] {
