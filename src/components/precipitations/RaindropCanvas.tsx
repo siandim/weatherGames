@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Raindrop, Images } from "./interfaces";
 import { generateRaindrops, getNumDrops, determinePrecipType } from "./helpers";
-import styles from "./precipitation.module.css"
+import styles from "./precipitation.module.css";
 interface RaindropCanvasProps {
   temp: number[];
   relativeHumidity: number[];
@@ -28,14 +28,14 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const parent = canvas.parentElement; // Get the parent div (.precipAnimation)
-      
+
       if (parent) {
         canvas.width = parent.clientWidth;
         canvas.height = parent.clientHeight;
       }
     }
   }, []);
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -43,19 +43,23 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     if (!ctx) return;
 
     if (isSliding) {
+      console.log("is sliding ");
       // Clear the canvas and stop animation when sliding is in progress
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      console.log("Animation running:", !!animationFrameRef.current);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
       }
       return;
     }
+    console.log("is not sliding ");
 
     // Check if the relative humidity for layer 1 is above the threshold
     if (raindrops.length === 0 && relativeHumidity[0] >= humidityThreshold) {
       // Generate initial raindrops from layer 1
       const numDrops = getNumDrops(relativeHumidity[0]); // Based on layer 1's humidity
+      console.log("Generated raindrops:", raindrops.length);
 
       const initialRaindrops = generateRaindrops(
         numDrops,
@@ -147,7 +151,7 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
             ? "snow-puddle" // New snow puddle image
             : "puddle"; // Regular rain puddle
         const numPuddles = relativeHumidity[2] > 60 ? 3 : 2;
-        console.log(type);
+
         drawPuddle(
           ctx,
           precipImages[type],
@@ -162,6 +166,9 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     };
 
     animate();
+    console.log("Current raindrops:", raindrops);
+    console.log("Current temp:", temp);
+    console.log("Current relativeHumidity:", relativeHumidity);
 
     // Clean up animation frame on component unmount
     return () => {
@@ -284,7 +291,7 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     let puddleWidth = 500;
     let puddleHeight = 50;
     let margin = 20;
-    let puddleY = canvasHeight - puddleHeight ;
+    let puddleY = canvasHeight - puddleHeight;
 
     if (type == "snow-puddle") {
       puddleWidth = 500;
@@ -304,13 +311,9 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   };
 
   return (
-    <div
-      className={styles.canva}>
-      <canvas
-      ref={canvasRef}
-    ></canvas>
+    <div className={styles.canva}>
+      <canvas ref={canvasRef}></canvas>
     </div>
-    
   );
 };
 
