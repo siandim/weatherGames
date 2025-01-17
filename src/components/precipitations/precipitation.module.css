@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   justify-items: center;
- 
+  touch-action: none;
 }
 
 .container {
@@ -82,11 +82,11 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 /* Thumb (handle) styling */
 input[type="range"]::-webkit-slider-thumb {
-  margin-top: -3px;
+  margin-top: -4px;
   -webkit-appearance: none;
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background: #404142; /* Handle color */
   border-radius: 50%;
   cursor: pointer;
