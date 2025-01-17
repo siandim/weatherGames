@@ -24,17 +24,17 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   // Define a humidity threshold for precipitation
   const humidityThreshold = 60; // Adjust this value as necessary
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const canvas = canvasRef.current;
-      const parent = canvas.parentElement; // Get the parent div (.precipAnimation)
+  // useEffect(() => {
+  //   if (canvasRef.current) {
+  //     const canvas = canvasRef.current;
+  //     const parent = canvas.parentElement; // Get the parent div (.precipAnimation)
       
-      if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-      }
-    }
-  }, []);
+  //     if (parent) {
+  //       canvas.width = parent.clientWidth;
+  //       canvas.height = parent.clientHeight;
+  //     }
+  //   }
+  // }, []);
   
   useEffect(() => {
     const canvas = canvasRef.current;
