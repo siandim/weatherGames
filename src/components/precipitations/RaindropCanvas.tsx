@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Raindrop, Images } from "./interfaces";
 import { generateRaindrops, getNumDrops, determinePrecipType } from "./helpers";
-
+import styles from "./precipitation.module.css"
 interface RaindropCanvasProps {
   temp: number[];
   relativeHumidity: number[];
@@ -24,6 +24,18 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   // Define a humidity threshold for precipitation
   const humidityThreshold = 60; // Adjust this value as necessary
 
+  useEffect(() => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const parent = canvas.parentElement; // Get the parent div (.precipAnimation)
+      
+      if (parent) {
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+      }
+    }
+  }, []);
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -272,13 +284,13 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     let puddleWidth = 500;
     let puddleHeight = 50;
     let margin = 20;
-    let puddleY = canvasHeight - puddleHeight - 5;
+    let puddleY = canvasHeight - puddleHeight ;
 
     if (type == "snow-puddle") {
       puddleWidth = 500;
       puddleHeight = 200;
       margin = 0;
-      puddleY = canvasHeight - puddleHeight + 85;
+      puddleY = canvasHeight - puddleHeight + 95;
     }
     const puddlePositions = [
       margin,
@@ -292,12 +304,13 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   };
 
   return (
-    <canvas
+    <div
+      className={styles.canva}>
+      <canvas
       ref={canvasRef}
-      width="1000px"
-      height="500px"
-      className="absolute"
     ></canvas>
+    </div>
+    
   );
 };
 
