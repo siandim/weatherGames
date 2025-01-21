@@ -22,7 +22,7 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
   const [showPuddle, setShowPuddle] = useState<boolean>(false); // Track puddle visibility
 
   // Define a humidity threshold for precipitation
-  const humidityThreshold = 60; // Adjust this value as necessary
+  const humidityThreshold = 90; 
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -71,18 +71,16 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
         let canChangeType;
 
         if (temp[0] < 32 && drop.layer > 1) {
-          // If it's below freezing in mid layers (layer 2 and 3), chance to change into sleet or snow
-          canChangeType = true; // 100% chance of changing into snow/sleet
-          // Strong chance of turning into snow or ice
+          canChangeType = true; 
+         
         } else if (temp[0] < 40 && temp[1] < 32) {
-          // If temperature in the first layer is below 40°F and second layer is below freezing with high humidity
-          canChangeType = Math.random() < 0.9; // 90% chance of changing type (likely to freeze)
+          canChangeType = Math.random() < 0.9; // 90% chance of changing type 
         } else if (temp[0] < 32 && temp[1] > 50) {
           canChangeType = true;
         } else {
-          //   // Default condition: 70% chance to change type based on random factors (e.g., wind)
-          canChangeType = Math.random() < 0.8;
-        } // 70% chance the raindrop can change type
+         // Default condition: 70% chance to change type based on random factors (e.g., wind)
+          canChangeType = Math.random() < 0.7;
+        } 
         console.log("cnaChangeType" + canChangeType);
         return {
           ...drop,
@@ -90,9 +88,7 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
         };
       });
       setRaindrops(initialRaindrops);
-      //
-      // setRainDuration((prev) => prev + 1);
-      // setShowPuddle(true); // Show puddle after enough rain
+      
     } else {
       // If humidity is not sufficient, set raindrops to empty
       setRaindrops([]);
@@ -160,15 +156,16 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
 
       animationFrameRef.current = requestAnimationFrame(animate);
     };
-
-    animate();
+   
+    animate(); 
+    console.log("animated " + animate());
     console.log("Current raindrops:", raindrops);
     console.log("Current temp:", temp);
     console.log("Current relativeHumidity:", relativeHumidity);
-
     // Clean up animation frame on component unmount
     return () => {
       if (animationFrameRef.current) {
+        console.log("clean up")
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
@@ -199,8 +196,6 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     const dissapear = height + 1;
     // Define probabilities for disappearing in layers 2 and 3
     if (currentLayer === 1) {
-      // && relativeHumidity[1] < 90 && Math.random() < 0.05
-      // 20% chance to disappear in layer 2
       switch (true) {
         case relativeHumidity[1] < 30:
           if (Math.random() < 0.15) {
@@ -236,7 +231,9 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
       switch (true) {
         case relativeHumidity[2] < 30:
           if (Math.random() < 0.15) {
+            
             drop.y = dissapear;
+            console.log(dissapear)
           }
           break;
         case relativeHumidity[2] < 40:
