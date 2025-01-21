@@ -31,6 +31,7 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
               min="20"
               max="75"
               value={temp[index]}
+              onClick={handleSlidingEnd}
               onChange={(e) => handleTempChange(index, Number(e.target.value))}
               onMouseUp={handleSlidingEnd}
               onTouchEnd={handleSlidingEnd}
@@ -55,6 +56,7 @@ rgb(86, 104, 165) 0%, /* Left side () */
               min="20"
               max="75"
               value={dewPoint[index]}
+              onClick={handleSlidingEnd}
               onChange={(e) =>
                 handleDewPointChange(index, Number(e.target.value))
               }
