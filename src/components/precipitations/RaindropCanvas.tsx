@@ -70,24 +70,20 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
       ).map((drop) => {
         let canChangeType;
 
-        if (temp[0] > 32 && drop.layer === 1) {
-          // If it's above freezing (32°F) in the lowest layer (layer 1), keep as rain
-          canChangeType = false; // 0% chance of changing type (stays as rain)
-        } else if (temp[0] < 32 && drop.layer > 1 && drop.layer <= 3) {
+        if (temp[0] < 32 && drop.layer > 1) {
           // If it's below freezing in mid layers (layer 2 and 3), chance to change into sleet or snow
           canChangeType = true; // 100% chance of changing into snow/sleet
-        } else if (temp[0] < 20 && drop.layer > 3) {
-          // If it's very cold (below 20°F) in higher layers (layer 4+), strong chance of turning into snow
-          canChangeType = true; // Strong chance of turning into snow or ice
-        } else if (temp[0] < 40 && temp[1] < 32 && drop.layer > 1) {
+          // Strong chance of turning into snow or ice
+        } else if (temp[0] < 40 && temp[1] < 32) {
           // If temperature in the first layer is below 40°F and second layer is below freezing with high humidity
           canChangeType = Math.random() < 0.9; // 90% chance of changing type (likely to freeze)
         } else if (temp[0] < 32 && temp[1] > 50) {
-          canChangeType = Math.random() < 1;
+          canChangeType = true;
         } else {
           //   // Default condition: 70% chance to change type based on random factors (e.g., wind)
           canChangeType = Math.random() < 0.8;
         } // 70% chance the raindrop can change type
+        console.log("cnaChangeType" + canChangeType);
         return {
           ...drop,
           canChangeType,
@@ -261,7 +257,6 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
         default:
           break;
       }
-      //drop.y = height + 1; // Move it out of view
     }
 
     // Reset drop to the top if it falls out of view

@@ -18,8 +18,6 @@ export  const generateRaindrops = (
     canvasHeight:number,
   ): Raindrop[] => {
     const drops: Raindrop[] = [];
-    // const width = canvasRef.current?.width || window.innerWidth;
-    // const height = canvasRef.current?.height || window.innerHeight;
     const scales = [0.10, 0.5, 0.75, 1];
 
     for (let i = 0; i < numOfDrops; i++) {

@@ -134,29 +134,5 @@
     cursor: pointer;
   }
   
-  /* @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    input[type="range"] {
-      overflow: hidden;
-      width: 300px;
-      -webkit-appearance: none;
-      background-color: #ffffff69;
-    }
-  
-    input[type="range"]::-webkit-slider-runnable-track {
-      height: 10px;
-      -webkit-appearance: none;
-      color: #530d04;
-      background: #b80c0c8e; 
-      margin-top: -1px;
-    }
-  
-    input[type="range"]::-webkit-slider-thumb {
-      width: 10px;
-      -webkit-appearance: none;
-      height: 10px;
-      cursor: grab;
-      background: #3f0101e5;
-      box-shadow: -80px 0 0 80px #b80c0c8e;
-    } */
-  
+
   
