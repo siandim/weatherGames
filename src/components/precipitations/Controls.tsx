@@ -32,9 +32,9 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
               max="75"
               value={temp[index]}
               onClick={handleSlidingEnd}
+            
               onChange={(e) => handleTempChange(index, Number(e.target.value))}
               onMouseUp={handleSlidingEnd}
-              onTouchEnd={handleSlidingEnd}
               style={{
                 background: `linear-gradient(to right, 
 rgb(86, 104, 165) 0%, /* Left side () */
@@ -61,7 +61,6 @@ rgb(86, 104, 165) 0%, /* Left side () */
                 handleDewPointChange(index, Number(e.target.value))
               }
               onMouseUp={handleSlidingEnd}
-              onTouchEnd={handleSlidingEnd}
               style={{
                 background: `linear-gradient(to right, 
 rgb(99, 58, 20) 0%, /* Left side (Red) */
