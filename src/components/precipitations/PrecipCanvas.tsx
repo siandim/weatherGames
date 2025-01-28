@@ -71,7 +71,7 @@ const PrecipCanvas: React.FC = () => {
     });
     setIsSliding(true);
   }, []);
-
+  //hello
   // Handle changes to the dew point inputs
   const handleDewPointChange = useCallback((index: number, value: number) => {
     setDewPoint(prev => {
