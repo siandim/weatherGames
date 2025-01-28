@@ -1,4 +1,4 @@
-//RainCanvas.tsx
+//PrecipCanvas.tsx
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Images, Precips } from "./interfaces";
 import { calculateRelativeHumidity } from "./helpers";
@@ -71,7 +71,7 @@ const PrecipCanvas: React.FC = () => {
     });
     setIsSliding(true);
   }, []);
-  //hello
+  
   // Handle changes to the dew point inputs
   const handleDewPointChange = useCallback((index: number, value: number) => {
     setDewPoint(prev => {

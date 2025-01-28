@@ -10,6 +10,7 @@ export const calculateRelativeHumidity = (tempF: number, dewPointF: number): num
   const e_s = 6.112 * Math.exp((17.67 * tempC) / (tempC + 243.5));
   return Math.round(100 * (e_d / e_s));
 };
+//okay
 export  const generateRaindrops = (
     numOfDrops: number,
     image: HTMLImageElement,
