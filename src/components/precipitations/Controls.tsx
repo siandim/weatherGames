@@ -1,5 +1,5 @@
 // LayerControls.tsx
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./precipitation.module.css";
 interface LayerControlsProps {
   temp: number[];
@@ -17,7 +17,25 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
   handleTempChange,
   handleDewPointChange,
   handleSlidingEnd,
-}) => (
+}) => {
+  const isSliding = useRef(false);
+  const endSliding =() => {
+    if (isSliding.current) {
+      isSliding.current = false;
+      handleSlidingEnd();
+    }
+  };
+  useEffect(()=>{
+    window.addEventListener("mouseup", endSliding);
+    window.addEventListener("touchend", endSliding);
+    return () => {
+      window.removeEventListener('mouseup', endSliding);
+      window.removeEventListener("touchend", endSliding);
+    }
+  },[]);
+
+
+return(
   <div>
     <div>
       {temp.map((_t, index) => (
@@ -31,11 +49,13 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
               min="20"
               max="75"
               value={temp[index]}
-              onClick={handleSlidingEnd}
-              onTouchStart={handleSlidingEnd}  
+              onMouseDown={() => (isSliding.current = true)}
+              onTouchStart={() => (isSliding.current = true)}
+              //onClick={handleSlidingEnd}
+              // onTouchStart={handleSlidingEnd}  
               onChange={(e) => handleTempChange(index, Number(e.target.value))}
-              onMouseUp={handleSlidingEnd}
-              onTouchEnd={handleSlidingEnd}
+              //onMouseUp={handleSlidingEnd}
+              //onTouchEnd={handleSlidingEnd}
               style={{
                 background: `linear-gradient(to right, 
 rgb(86, 104, 165) 0%, /* Left side () */
@@ -57,13 +77,15 @@ rgb(86, 104, 165) 0%, /* Left side () */
               min="20"
               max="75"
               value={dewPoint[index]}
-              onTouchStart={handleSlidingEnd}
-              onClick={handleSlidingEnd}
+              onMouseDown={() => (isSliding.current = true)}
+              onTouchStart={() => (isSliding.current = true)}
+              // onTouchStart={handleSlidingEnd}
+              // onClick={handleSlidingEnd}
               onChange={(e) =>
                 handleDewPointChange(index, Number(e.target.value))
               }
-              onMouseUp={handleSlidingEnd}
-              onTouchEnd={handleSlidingEnd}
+              // onMouseUp={handleSlidingEnd}
+              // onTouchEnd={handleSlidingEnd}
               style={{
                 background: `linear-gradient(to right, 
 rgb(99, 58, 20) 0%, /* Left side  */
@@ -87,3 +109,4 @@ rgb(99, 58, 20) 0%, /* Left side  */
     </div>
   </div>
 );
+};
