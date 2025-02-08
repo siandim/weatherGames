@@ -106,7 +106,6 @@ const PrecipCanvas: React.FC = () => {
     };
     loadImages();
   }, [isSliding]);
-  //[isSliding]
 
   // Call this function when the slider interaction ends
   const handleSlidingEnd = () => {

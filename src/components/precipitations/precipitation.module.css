@@ -1,11 +1,9 @@
 .borders {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    touch-action: none;
-  
-    height: 80vh;
-  }
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  width: 100%;
+}
   
   .container {
     display: flex;
@@ -24,6 +22,7 @@
     padding: 3px;
     position: relative;
     overflow: hidden;
+    touch-action: none;
     /* display: flex;  */
   }
   .canva {
@@ -107,14 +106,6 @@
     touch-action: none;
   }
   
-  /* Track styling */
-  /* input[type="range"]::-webkit-slider-runnable-track {
-    height: 3px;
-    border-radius: 5px;
-    /* border: 2px solid #ddd; */
-  /* } */ 
-  
-  /* Thumb (handle) styling */
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;

@@ -1,4 +1,3 @@
-// src/App.tsx
 import React from "react";
 import RainCanvas from "./PrecipCanvas";
 import styles from "./precipitation.module.css";

@@ -1,7 +1,7 @@
 // LayerControls.tsx
 import React, { useEffect, useRef } from "react";
 import styles from "./precipitation.module.css";
-import { debounce } from "lodash"
+import { debounce } from "lodash";
 interface LayerControlsProps {
   temp: number[];
   dewPoint: number[];
@@ -20,70 +20,52 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
   handleSlidingEnd,
 }) => {
   const isSliding = useRef(false);
-  
+
   const debouncedHandleSlidingEnd = useRef(
     debounce(() => {
       if (isSliding.current) {
-        isSliding.current = false
-        handleSlidingEnd()
+        isSliding.current = false;
+        handleSlidingEnd();
       }
-    }, 300),
-  ).current
+    }, 300)
+  ).current;
 
   useEffect(() => {
     const endSliding = () => {
-      debouncedHandleSlidingEnd()
-    }
+      debouncedHandleSlidingEnd();
+    };
 
-    window.addEventListener("mouseup", endSliding)
-    window.addEventListener("touchend", endSliding)
+    window.addEventListener("mouseup", endSliding);
+    window.addEventListener("touchend", endSliding);
 
     return () => {
-      window.removeEventListener("mouseup", endSliding)
-      window.removeEventListener("touchend", endSliding)
-      debouncedHandleSlidingEnd.cancel()
-    }
-  }, [debouncedHandleSlidingEnd])
+      window.removeEventListener("mouseup", endSliding);
+      window.removeEventListener("touchend", endSliding);
+      debouncedHandleSlidingEnd.cancel();
+    };
+  }, [debouncedHandleSlidingEnd]);
 
-  // const endSliding =() => {
-  //   if (isSliding.current) {
-  //     isSliding.current = false;
-  //     handleSlidingEnd();
-  //   }
-  // };
-  // useEffect(()=>{
-  //   window.addEventListener("mouseup", endSliding);
-  //   window.addEventListener("touchend", endSliding);
-  //   return () => {
-  //     window.removeEventListener('mouseup', endSliding);
-  //     window.removeEventListener("touchend", endSliding);
-  //   }
-  // },[]);
-
-
-return(
-  <div>
+  return (
     <div>
-      {temp.map((_t, index) => (
-        <div key={index} className={styles.sliders}>
-          <br />
-          <div>
-            <label className={styles.labels}>Temperature:</label>
+      <div>
+        {temp.map((_t, index) => (
+          <div key={index} className={styles.sliders}>
+            <br />
+            <div>
+              <label className={styles.labels}>Temperature:</label>
 
-            <input
-              type="range"
-              min="20"
-              max="75"
-              value={temp[index]}
-              onMouseDown={() => (isSliding.current = true)}
-              onTouchStart={() => (isSliding.current = true)}
-              //onClick={handleSlidingEnd}
-              // onTouchStart={handleSlidingEnd}  
-              onChange={(e) => handleTempChange(index, Number(e.target.value))}
-              //onMouseUp={handleSlidingEnd}
-              //onTouchEnd={handleSlidingEnd}
-              style={{
-                background: `linear-gradient(to right, 
+              <input
+                type="range"
+                min="20"
+                max="75"
+                value={temp[index]}
+                onMouseDown={() => (isSliding.current = true)}
+                onTouchStart={() => (isSliding.current = true)}
+                onChange={(e) =>
+                  handleTempChange(index, Number(e.target.value))
+                }
+                style={{
+                  background: `linear-gradient(to right, 
 rgb(86, 104, 165) 0%, /* Left side () */
                   rgb(84, 145, 214) ${
                     ((temp[index] - 20) / (75 - 20)) * 100
@@ -92,47 +74,43 @@ rgb(86, 104, 165) 0%, /* Left side () */
                     ((temp[index] - 20) / (75 - 20)) * 100
                   }%, /* Right side (Gray) */
                   #ddd 100%)`,
-              }}
-            />
-            <span className={styles.fah}>{temp[index]}°F</span>
-          </div>
-          <div>
-            <label className={styles.labels}>Dew Point:</label>
-            <input
-              type="range"
-              min="20"
-              max="75"
-              value={dewPoint[index]}
-              onMouseDown={() => (isSliding.current = true)}
-              onTouchStart={() => (isSliding.current = true)}
-              // onTouchStart={handleSlidingEnd}
-              // onClick={handleSlidingEnd}
-              onChange={(e) =>
-                handleDewPointChange(index, Number(e.target.value))
-              }
-              // onMouseUp={handleSlidingEnd}
-              // onTouchEnd={handleSlidingEnd}
-              style={{
-                background: `linear-gradient(to right, 
+                }}
+              />
+              <span className={styles.fah}>{temp[index]}°F</span>
+            </div>
+            <div>
+              <label className={styles.labels}>Dew Point:</label>
+              <input
+                type="range"
+                min="20"
+                max="75"
+                value={dewPoint[index]}
+                onMouseDown={() => (isSliding.current = true)}
+                onTouchStart={() => (isSliding.current = true)}
+                onChange={(e) =>
+                  handleDewPointChange(index, Number(e.target.value))
+                }
+                style={{
+                  background: `linear-gradient(to right, 
 rgb(99, 58, 20) 0%, /* Left side  */
                   rgb(85, 59, 11) ${
-                  ((dewPoint[index] - 20) / (75 - 20)) * 100
-                }%, /* Fill percentage */
+                    ((dewPoint[index] - 20) / (75 - 20)) * 100
+                  }%, /* Fill percentage */
                   #ddd ${
                     ((dewPoint[index] - 20) / (75 - 20)) * 100
                   }%, /* Right side (Gray) */
                   #ddd 100%)`,
-              }}
-            />
-            <span className={styles.fah}>{dewPoint[index]}°F</span>
+                }}
+              />
+              <span className={styles.fah}>{dewPoint[index]}°F</span>
+            </div>
+            <div>
+              <label>Relative Humidity:</label>
+              <span>{relativeHumidity[index]}%</span>
+            </div>
           </div>
-          <div>
-            <label>Relative Humidity:</label>
-            <span>{relativeHumidity[index]}%</span>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
 };
