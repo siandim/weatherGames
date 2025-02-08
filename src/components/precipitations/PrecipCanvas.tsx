@@ -4,7 +4,7 @@ import { Images, Precips } from "./interfaces";
 import { calculateRelativeHumidity } from "./helpers";
 import RaindropCanvas from "./RaindropCanvas";
 import { LayerControls } from "./Controls";
-import styles from "./precipitation.module.css"
+import styles from "./precipitation.module.css";
 
 // Define background images for different weather conditions
 const backgroundImg: Images[] = [
@@ -50,8 +50,8 @@ const PrecipCanvas: React.FC = () => {
   const [isSliding, setIsSliding] = useState<boolean>(false); // State to track if sliding is in progress
 
   // Calculate relative humidity for each temperature and dew point pair
-  const relativeHumidity = useMemo(() =>
-    temp.map((t, index) => calculateRelativeHumidity(t, dewPoint[index])),
+  const relativeHumidity = useMemo(
+    () => temp.map((t, index) => calculateRelativeHumidity(t, dewPoint[index])),
     [temp, dewPoint]
   );
 
@@ -60,31 +60,34 @@ const PrecipCanvas: React.FC = () => {
     if (relativeHumidity[0] >= 80) return backgroundImg[2];
     if (relativeHumidity[0] >= 50) return backgroundImg[1];
     return backgroundImg[0];
-  }, [relativeHumidity]);
+  }, [relativeHumidity[0]]);
 
   // Handle changes to the temperature inputs
   const handleTempChange = useCallback((index: number, value: number) => {
-    setTemp(prev => {
+    setTemp((prev) => {
       const newTemp = [...prev];
       newTemp[index] = value;
       return newTemp;
     });
     setIsSliding(true);
   }, []);
-  
+
   // Handle changes to the dew point inputs
-  const handleDewPointChange = useCallback((index: number, value: number) => {
-    setDewPoint(prev => {
-      const newDewPoint = [...prev];
-      newDewPoint[index] = Math.min(value, temp[index]);
-      return newDewPoint;
-    });
-    setIsSliding(true);
-  }, [temp]);
+  const handleDewPointChange = useCallback(
+    (index: number, value: number) => {
+      setDewPoint((prev) => {
+        const newDewPoint = [...prev];
+        newDewPoint[index] = Math.min(value, temp[index]);
+        return newDewPoint;
+      });
+      setIsSliding(true);
+    },
+    [temp]
+  );
 
   // Ensure dew points do not exceed corresponding temperatures
   useEffect(() => {
-    setDewPoint(prev => prev.map((dp, index) => Math.min(dp, temp[index])));
+    setDewPoint((prev) => prev.map((dp, index) => Math.min(dp, temp[index])));
   }, [temp]);
 
   // Load all precipitation images asynchronously
@@ -103,18 +106,15 @@ const PrecipCanvas: React.FC = () => {
     };
     loadImages();
   }, [isSliding]);
+  //[isSliding]
 
   // Call this function when the slider interaction ends
-  const handleSlidingEnd = useCallback(() => {
-      setIsSliding(false);
-
-  }, []);
+  const handleSlidingEnd = () => {
+    setIsSliding(false);
+  };
 
   return (
-    <div
-      className={styles.precipAnimation}
-
-    >
+    <div className={styles.precipAnimation}>
       {/* Display the background cloud image */}
       <img
         src={cloudImage.src || "/placeholder.svg"}
@@ -144,5 +144,3 @@ const PrecipCanvas: React.FC = () => {
 };
 
 export default PrecipCanvas;
-
-

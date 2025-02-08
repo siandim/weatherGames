@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react"
 import { Raindrop, Images } from "./interfaces";
 import { generateRaindrops, getNumDrops, determinePrecipType } from "./helpers";
 import styles from "./precipitation.module.css";
@@ -173,21 +174,16 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
       }
     };
   }, [relativeHumidity, temp, precipImages, isSliding]);
+  
 
-  // Function to determine the current layer based on y-position
-  const getCurrentLayer = (y: number, height: number, layers: number[]) => {
-    if (y < height * layers[1]) {
-      return 0; // Layer 1
-    } else if (y < height * layers[2]) {
-      return 1; // Layer 2
-    } else if (y < height * layers[3]) {
-      return 2; // Layer 3
-    } else {
-      return 3; // Layer 4
-    }
-  };
-
-  const updateRaindrop = (drop: Raindrop, height: number) => {
+ // Function to determine the current layer based on y-position
+  const getCurrentLayer = useCallback((y: number, height: number, layers: number[]) => {
+    if (y < height * layers[1]) return 0
+    if (y < height * layers[2]) return 1
+    if (y < height * layers[3]) return 2
+    return 3
+  }, [])
+  const updateRaindrop = useCallback((drop: Raindrop, height: number) => {
     drop.y += drop.speed;
 
     // Get the current layer based on drop's y position
@@ -263,7 +259,7 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
       drop.y = 0.16 * height;
       drop.x = Math.random() * (canvasRef.current?.width || window.innerWidth);
     }
-  };
+  },[relativeHumidity,getCurrentLayer])
 
   const drawRaindrop = (
     ctx: CanvasRenderingContext2D,
@@ -304,6 +300,16 @@ const RaindropCanvas: React.FC<RaindropCanvasProps> = ({
     });
   };
 
+  console.log("Effect triggered with values:", {
+    relativeHumidity,
+    temp,
+    precipImages,
+    isSliding,
+  });
+
+  useEffect(() => {
+    console.log("Updated raindrops:", raindrops.length);
+  }, [raindrops]);
   return (
     <div className={styles.canva}>
       <canvas ref={canvasRef}></canvas>

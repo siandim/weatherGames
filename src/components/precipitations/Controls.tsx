@@ -1,6 +1,7 @@
 // LayerControls.tsx
 import React, { useEffect, useRef } from "react";
 import styles from "./precipitation.module.css";
+import { debounce } from "lodash"
 interface LayerControlsProps {
   temp: number[];
   dewPoint: number[];
@@ -19,20 +20,45 @@ export const LayerControls: React.FC<LayerControlsProps> = ({
   handleSlidingEnd,
 }) => {
   const isSliding = useRef(false);
-  const endSliding =() => {
-    if (isSliding.current) {
-      isSliding.current = false;
-      handleSlidingEnd();
+  
+  const debouncedHandleSlidingEnd = useRef(
+    debounce(() => {
+      if (isSliding.current) {
+        isSliding.current = false
+        handleSlidingEnd()
+      }
+    }, 300),
+  ).current
+
+  useEffect(() => {
+    const endSliding = () => {
+      debouncedHandleSlidingEnd()
     }
-  };
-  useEffect(()=>{
-    window.addEventListener("mouseup", endSliding);
-    window.addEventListener("touchend", endSliding);
+
+    window.addEventListener("mouseup", endSliding)
+    window.addEventListener("touchend", endSliding)
+
     return () => {
-      window.removeEventListener('mouseup', endSliding);
-      window.removeEventListener("touchend", endSliding);
+      window.removeEventListener("mouseup", endSliding)
+      window.removeEventListener("touchend", endSliding)
+      debouncedHandleSlidingEnd.cancel()
     }
-  },[]);
+  }, [debouncedHandleSlidingEnd])
+
+  // const endSliding =() => {
+  //   if (isSliding.current) {
+  //     isSliding.current = false;
+  //     handleSlidingEnd();
+  //   }
+  // };
+  // useEffect(()=>{
+  //   window.addEventListener("mouseup", endSliding);
+  //   window.addEventListener("touchend", endSliding);
+  //   return () => {
+  //     window.removeEventListener('mouseup', endSliding);
+  //     window.removeEventListener("touchend", endSliding);
+  //   }
+  // },[]);
 
 
 return(
