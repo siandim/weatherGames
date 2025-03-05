@@ -140,9 +140,9 @@
 .texts {
   font-family: Georgia, "Times New Roman", Times, serif;
   border-radius: 25px;
-  color: white;
+  color: #0c4a6e;
   padding: 10px;
   font-weight: bold;
   width: fit-content;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
 }

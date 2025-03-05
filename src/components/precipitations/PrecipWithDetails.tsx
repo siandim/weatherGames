@@ -19,7 +19,7 @@ const PrecipWithDetails: React.FC = () => {
         <RainCanvas />
       </div>
 
-      <div className="p-4 text-white">
+      <div className="p-4 text-blue">
         <h2 className="font-bold text-xl mb-2">Precipitation Simulation</h2>
         <p className="mb-4">
           We are simulating rain, cold droplets, sleet, or snow falling from the

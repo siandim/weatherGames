@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import styles from '../components/style.module.css'
 export default function NavBar() {
   return (
     <nav>
@@ -11,10 +12,13 @@ export default function NavBar() {
           <button className="mr-3">Precipitation </button>
         </Link>
         <Link to="/memoryGame">
-          <button className="mr-3">Memory Game</button>
+          <button className="mr-3">Instrument</button>
         </Link>
         <Link to="/waterCycle">
           <button className="mr-3">Water Cycle</button>
+        </Link>
+        <Link to="/cloudGame">
+          <button className="mr-3">Clouds</button>
         </Link>
       </nav>
     </nav>
