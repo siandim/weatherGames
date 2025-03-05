@@ -38,7 +38,18 @@ const HomePage = () => {
             <p> Water Cycle Animation</p>
           </Link>
         </div>
+        <div className={homestyle.iconContainer}>
+          <Link to="/cloudDiagram">
+            <img
+              className={homestyle.gameIcon}
+              src="/img/cloudGames/cloudposter.png"
+              alt="cloud diagram"
+            />
+            <p> Type of Clouds Diagram</p>
+          </Link>
+        </div>
       </div>
+      
     </div>
   );
 };

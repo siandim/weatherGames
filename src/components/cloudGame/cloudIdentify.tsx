@@ -17,7 +17,7 @@ const questions: Question[] = [
   // Add more questions here
 ];
 
-function CloudGame() {
+function CloudIdentify() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
@@ -114,4 +114,4 @@ function CloudGame() {
   );
 }
 
-export default CloudGame;
+export default CloudIdentify;

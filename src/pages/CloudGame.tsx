@@ -1,15 +1,12 @@
-import CloudLayout from "../components/cloudGame/cloudGame"
+import CloudIdentify from "../components/cloudGame/cloudIdentify";
 
-const CloudGame = () => {
-  return (
+const CloudGame = () =>{
+return (
     <div>
-      <div className="w-full h-full">
-      <CloudLayout/>
-      </div>
-    
-      
+        <CloudIdentify/>
     </div>
-  )
+)
 }
+export default CloudGame;
 
-export default CloudGame
+

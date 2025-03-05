@@ -5,6 +5,7 @@ import PrecipitationPage from "./pages/Precip";
 import MemoryGamePage from "./pages/MemoryGame";
 import WaterCyclePage from "./pages/WaterCycle.tsx";
 import CloudGame from "./pages/CloudGame.tsx";
+import CloudLayout from "./pages/cloudLayout.tsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/precip" element={<PrecipitationPage />} />
         <Route path="/memoryGame" element={<MemoryGamePage />} />
         <Route path="/waterCycle" element={<WaterCyclePage />}/>
+        <Route path="/cloudDiagram" element={<CloudLayout/>}/>
         <Route path="/cloudGame" element={<CloudGame/>}/>
       </Routes>
     </>

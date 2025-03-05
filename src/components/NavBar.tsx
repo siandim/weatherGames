@@ -16,8 +16,8 @@ export default function NavBar() {
         <Link to="/waterCycle">
           <button className="mr-3">Water Cycle</button>
         </Link>
-        <Link to="/cloudGame">
-          <button className="mr-3">Clouds</button>
+        <Link to="/cloudDiagram">
+          <button className="mr-3">Cloud Diagram</button>
         </Link>
       </nav>
     </nav>
