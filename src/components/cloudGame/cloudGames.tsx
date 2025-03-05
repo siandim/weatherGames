@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface Question {
   image: string;
@@ -9,9 +9,10 @@ interface Question {
 
 const questions: Question[] = [
   {
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cloudposter.jpg-m51L6bwRDiEkL2UF09TQ0jOXq0a14r.jpeg",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cloudposter.jpg-m51L6bwRDiEkL2UF09TQ0jOXq0a14r.jpeg",
     correctAnswer: "Cirrus",
-    options: ["Cirrus", "Stratus", "Cumulus", "Altocumulus"]
+    options: ["Cirrus", "Stratus", "Cumulus", "Altocumulus"],
   },
   // Add more questions here
 ];
@@ -27,7 +28,7 @@ function CloudGame() {
     if (answer === questions[currentQuestion].correctAnswer) {
       setScore(score + 1);
     }
-    
+
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
@@ -47,15 +48,17 @@ function CloudGame() {
 
   if (showResult) {
     return (
-      <motion.div 
+      <motion.div
         className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-2xl font-bold mb-4">Game Complete!</h2>
-        <p className="text-xl mb-6">Your score: {score} out of {questions.length}</p>
-        <motion.button 
+        <p className="text-xl mb-6">
+          Your score: {score} out of {questions.length}
+        </p>
+        <motion.button
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
           onClick={resetGame}
           whileHover={{ scale: 1.05 }}
@@ -68,7 +71,7 @@ function CloudGame() {
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -78,11 +81,11 @@ function CloudGame() {
       <p className="text-gray-600 mb-4">
         Question {currentQuestion + 1} of {questions.length}
       </p>
-      
+
       <div className="mb-6">
-        <img 
+        <img
           src={questions[currentQuestion].image || "/placeholder.svg"}
-          alt="Cloud for identification" 
+          alt="Cloud for identification"
           className="w-full h-auto rounded-lg"
         />
       </div>
@@ -92,11 +95,11 @@ function CloudGame() {
           <motion.button
             key={option}
             className={`p-3 rounded-md text-center transition-colors ${
-              selectedAnswer === option 
-                ? option === questions[currentQuestion].correctAnswer 
-                  ? 'bg-green-500 text-white' 
-                  : 'bg-red-500 text-white'
-                : 'bg-gray-200 hover:bg-gray-300'
+              selectedAnswer === option
+                ? option === questions[currentQuestion].correctAnswer
+                  ? "bg-green-500 text-white"
+                  : "bg-red-500 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
             }`}
             onClick={() => handleAnswer(option)}
             disabled={selectedAnswer !== null}

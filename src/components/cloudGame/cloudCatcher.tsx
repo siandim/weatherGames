@@ -16,14 +16,14 @@ interface GameScenario {
   correctPrediction: WeatherPrediction
 }
 
-const generateScenario = (level: number): GameScenario => {
+const generateScenario = (currentLevel: number): GameScenario => {
   // Logic to generate a scenario based on the current level
   // This is a simplified version; you'd want to make this more complex
   const cloudKeys = Object.keys(cloudData)
   const randomCloudKey = cloudKeys[Math.floor(Math.random() * cloudKeys.length)]
   const cloud = cloudData[randomCloudKey as keyof typeof cloudData]
   const prediction = weatherPredictions[Math.floor(Math.random() * weatherPredictions.length)]
-
+  console.log(cloud, currentLevel);
   return {
     clouds: [cloud],
     correctPrediction: prediction,
